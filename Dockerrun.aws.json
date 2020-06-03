@@ -11,7 +11,7 @@
     {
       "name": "mongo-seed",
       "image": "njehyde/issue-tracker-mongo-seed",
-      "hostname": "mongo_seed",
+      "hostname": "mongo-seed",
       "essential": false,
       "memory": 128
     },

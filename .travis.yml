@@ -12,7 +12,7 @@ after_success:
   - docker build -t njehyde/issue-tracker-client ./client
   - docker build -t njehyde/issue-tracker-nginx ./nginx
   - docker build -t njehyde/issue-tracker-server ./server
-  - docker build -t njehyde/issue-tracker-mongo-seed ./mongo_seed
+  - docker build -t njehyde/issue-tracker-mongo-seed ./mongo-seed
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push njehyde/issue-tracker-client
   - docker push njehyde/issue-tracker-nginx
