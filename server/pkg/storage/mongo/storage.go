@@ -33,17 +33,34 @@ func NewStorage() (*Storage, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	username := os.Getenv("MONGODB_USERNAME")
+	password := os.Getenv("MONGODB_PASSWORD")
+	dnsRecord := os.Getenv("MONGODB_DNS_RECORD")
 	host := os.Getenv("MONGODB_HOST")
 	port := os.Getenv("MONGODB_PORT")
 
-	if len(host) == 0 {
-		host = "localhost"
-	}
-	if len(port) == 0 {
-		port = "27017"
+	credentials := ""
+	uri := ""
+
+	if len(username) > 0 && len(password) > 0 {
+		credentials = username + ":" + password + "@"
 	}
 
-	clientOptions := options.Client().ApplyURI("mongodb://" + host + ":" + port)
+	if len(dnsRecord) > 0 {
+		uri = "mongodb+srv://" + credentials + dnsRecord + "/?retryWrites=true&w=majority"
+	} else {
+		if len(host) == 0 {
+			host = "localhost"
+		}
+		if len(port) == 0 {
+			port = "27017"
+		}
+		uri = "mongodb://" + credentials + host + ":" + port
+	}
+
+	slog.Infof("uri: %v", uri)
+
+	clientOptions := options.Client().ApplyURI(uri)
 
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {

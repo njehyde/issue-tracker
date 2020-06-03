@@ -1,6 +1,5 @@
 FROM mongo:latest
 
-# COPY project_types.json /project_types.json
 COPY init.js /init.js
 
-CMD mongo --host mongodb issue-tracker init.js
+CMD mongo "mongodb+srv://$MONGODB_DNS_RECORD/issue-tracker" --username $MONGO_USERNAME --password $MONGO_PASSWORD init.js
