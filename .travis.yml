@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t njehyde/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run njehyde/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t njehyde/issue-tracker-client ./client
+  - docker build -t njehyde/issue-tracker-nginx ./nginx
+  - docker build -t njehyde/issue-tracker-server ./server
+  - docker build -t njehyde/issue-tracker-mongo-seed ./mongo_seed
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push njehyde/issue-tracker-client
+  - docker push njehyde/issue-tracker-nginx
+  - docker push njehyde/issue-tracker-server
+  - docker push njehyde/issue-tracker-mongo-seed
