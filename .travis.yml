@@ -18,3 +18,15 @@ after_success:
   - docker push njehyde/issue-tracker-nginx
   - docker push njehyde/issue-tracker-server
   - docker push njehyde/issue-tracker-mongo-seed
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "issue-tracker"
+  env: "IssueTracker-env"
+  bucket_name: "elasticbeanstalk-us-east-1-762084187310"
+  bucket_path: "issue-tracker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY

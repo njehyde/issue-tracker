@@ -1,0 +1,40 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "njehyde/issue-tracker-client",
+      "hostname": "client",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "mongo-seed",
+      "image": "njehyde/issue-tracker-mongo-seed",
+      "hostname": "mongo_seed",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "server",
+      "image": "njehyde/issue-tracker-server",
+      "hostname": "api",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "nginx",
+      "image": "njehyde/issue-tracker-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["client", "server"]
+    }
+  ]
+}
