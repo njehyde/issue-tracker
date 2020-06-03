@@ -1,0 +1,12 @@
+FROM golang:latest
+
+WORKDIR /go/src/issue-tracker
+COPY . .
+
+RUN go get -d -v ./...
+# RUN go install -v ./...
+
+RUN go get github.com/githubnemo/CompileDaemon
+
+# CMD ["go", "run", "./cmd/issue-tracker/main.go"]
+CMD ["CompileDaemon", "-build=go install ./cmd/issue-tracker/main.go", "-command=/go/bin/main", "-log-prefix=false", "-graceful-kill=true", "-color"]
