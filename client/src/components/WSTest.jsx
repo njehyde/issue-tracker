@@ -23,7 +23,7 @@ const WSTest = ({ userId, activeProjectId }) => {
 
   useEffect(() => {
     if (!ws) {
-      const socket = new WebSocket('ws://localhost/ws');
+      const socket = new WebSocket(`ws://${window.location.host}/ws`);
 
       // eslint-disable-next-line no-console
       console.log('Attempting Connection...');

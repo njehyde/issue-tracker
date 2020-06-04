@@ -4,7 +4,7 @@ import { paths } from 'constants/routes';
 import history from './history';
 
 const instance = axios.create({
-  baseURL: 'http://localhost/api/',
+  baseURL: '/api/',
   timeout: 1000,
 });
 
